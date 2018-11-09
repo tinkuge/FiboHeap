@@ -71,15 +71,36 @@ class InitializeFibHeap {
 	}
 	
 	Node removeMax(){
+		Node altmax = null;
 		if(max.next == max)
 			max = null;
 		
 		else{
 			max.prev.next = max.next;
 			max.next.prev = max.prev;
-			max.prev = null;
-			max.next = null;
+			//set max to something else
+			altmax = max;
+			max = max.next;
+			altmax.prev = null;
+			altmax.next = null;
 		}
+		
+		//if prev max has children
+		
+		if(altmax.degree != 0){	//track degree carefully
+			Node maxchild = altmax.child;
+			maxchild.parent = null;
+			while((maxchild.next != maxchild) && (maxchild.next != null)){
+				maxchild = maxchild.next;
+				maxchild.parent = null;
+			}
+			
+			max = meld(max, maxchild);
+		}
+		
+		
+		
+		
 	}
 	
 	
