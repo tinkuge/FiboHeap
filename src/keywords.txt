@@ -1,0 +1,7 @@
+$facebook 5 
+$youtube 3 
+$facebook 10 
+$amazon 2 
+$gmail 4 
+$weather 2 
+$facebook 6
