@@ -32,7 +32,7 @@ class InitializeFibHeap {
 	}
 	
 	
-	
+	//assumes each heap sent has its max node set to correct node
 	Node meld(Node m, Node n){
 		
 		Node temp;
@@ -72,6 +72,7 @@ class InitializeFibHeap {
 	
 	Node removeMax(){
 		Node altmax = null;
+		Node newHeap;
 		if(max.next == max)
 			max = null;
 		
@@ -89,14 +90,18 @@ class InitializeFibHeap {
 		
 		if(altmax.degree != 0){	//track degree carefully
 			Node maxchild = altmax.child;
+			//sever connections between parents and child
 			maxchild.parent = null;
+			altmax.child = null;
 			while((maxchild.next != maxchild) && (maxchild.next != null)){
 				maxchild = maxchild.next;
 				maxchild.parent = null;
 			}
-			
-			max = meld(max, maxchild);
+			//Heap doesn't point to true max
+			newHeap = meld(max, maxchild);
 		}
+		
+		
 		
 		
 		
