@@ -21,7 +21,7 @@ class InitializeFibHeap {
 		return max;
 	}
 	
-	void insert(String key, int val){
+	Node insert(String key, int val){
 		Node n = new Node(key, val);
 		n.degree = 0;
 		n.parent = null;
@@ -35,6 +35,8 @@ class InitializeFibHeap {
 			max = meld(n, max);
 			size++;
 		}
+		
+		return n;
 	}
 	
 	
