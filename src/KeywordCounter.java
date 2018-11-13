@@ -13,7 +13,8 @@ public class KeywordCounter {
 	public static void main(String[] args) throws FileNotFoundException, UnsupportedEncodingException {
 		ArrayList<String> inpline = new ArrayList<String>();
 		HashMap<String, Integer> keyfreq = new HashMap<String, Integer>();
-		Node n, remMax;
+		HashMap<String, Node> keyNode = new HashMap<String, Node>();
+		Node n, remMax, reNode;
 		InitializeFibHeap ifh = new InitializeFibHeap();
 		ArrayList<Node> nMaxList = new ArrayList<Node>();
 		
@@ -33,8 +34,20 @@ public class KeywordCounter {
 		for(String str: inpline){
 			if(str.charAt(0) == '$'){
 				String[] splitline = str.split(" ");
-				keyfreq.put(splitline[0], Integer.parseInt(splitline[1]));
-				System.out.println(keyfreq.get(splitline[0]));
+				String keyword = splitline[0].substring(1);
+				int keyval = Integer.parseInt(splitline[1]);
+				if(keyfreq.containsKey(keyword)){
+					n = keyNode.get(keyword);
+					ifh.increaseKey(n, keyval);
+				}
+				
+				else{
+					n = ifh.insert(keyword, keyval);
+					keyNode.put(keyword, n);
+				}
+				
+				
+				//System.out.println(keyfreq.get(splitline[0]));
 			}
 			
 			else{
@@ -51,7 +64,31 @@ public class KeywordCounter {
 					}
 					
 					if(nMaxList.size() >= 1){
+						String word = nMaxList.get(0).key;
+						pw.write(word);
+					}
+					
+					for(int j = 1; j < nMaxList.size(); j++){
+						String word = nMaxList.get(j).key;
+						pw.write(","+ word);
+					}
+					
+					for(int k = 0; k < nMaxList.size(); k++){
+						reNode = nMaxList.get(k);
+						ifh.insert(reNode.key, reNode.val);
 						
+						//should you insert it into hashmap
+					}
+					
+					nMaxList.clear();
+					
+				}
+				
+				else{
+					if(str.toLowerCase().equals("stop")){
+						pw.flush();
+						pw.close();
+						break;
 					}
 				}
 			}
