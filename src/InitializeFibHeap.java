@@ -81,9 +81,9 @@ class InitializeFibHeap {
 		altmax = max;
 		//set max to something else which won't necessarily be the max of that tree
 		max = max.next;
-		//sever connections between siblings
-		altmax.prev = null;
-		altmax.next = null;
+		//sever connections between siblings by making the next and prev point to itself
+		altmax.prev = altmax;
+		altmax.next = altmax;
 		
 		
 		//if prev max has children
@@ -92,21 +92,26 @@ class InitializeFibHeap {
 			Node maxchild = altmax.child;
 			//sever connections between parent and children
 			maxchild.parent = null;
-			altmax.child = null;
-			while((maxchild.next != maxchild) && (maxchild.next != null)){
-				maxchild = maxchild.next;
+			maxchild = maxchild.next;
+			while(maxchild != altmax.child && maxchild.parent == altmax){
 				maxchild.parent = null;
+				maxchild = maxchild.next;
 			}
+			
+			altmax.child = null;
 			//meld sibling tree with children of prev max.
 			//max pointer won't be pointing to true max
 			newHeap = meld(max, maxchild);
 			//find new max and assign it to max variable
 			//max = findMax(newHeap);
 			consolidate(newHeap);
+			size = size -1;
 			return altmax;
 		}
 		
 		else{
+			consolidate(max);
+			size = size -1;
 			return altmax;
 		}
 		
@@ -114,7 +119,7 @@ class InitializeFibHeap {
 	
 	//better to consolidate first and then find max because less roots to traverse to find roots
 	Node consolidate(Node heap){
-		max = heap;
+		//max = heap;
 		rootList.add(heap);
 		Node ini = heap.next;
 		Node current, newTree;
@@ -129,6 +134,7 @@ class InitializeFibHeap {
 			if(n.parent == null)
 				intoHM(n);
 		}
+		rootList.clear();
 		return max;
 	}
 	
@@ -203,9 +209,8 @@ class InitializeFibHeap {
 	void increaseKey(Node n, int inc){
 		n.val = n.val + inc;
 		
-		if((n.val > n.parent.val) && (n.parent != null))
-			//implement childcut
-			
+		if((n.parent != null) && (n.val > n.parent.val))
+			childCut(n);
 			
 		if(n.val > max.val)
 			max = n;
@@ -249,6 +254,10 @@ class InitializeFibHeap {
 		else
 			parent.childCut = true;
 		
+	}
+	
+	int getSize(){
+		return size;
 	}
 	
 	

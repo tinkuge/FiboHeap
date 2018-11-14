@@ -12,7 +12,6 @@ public class KeywordCounter {
 
 	public static void main(String[] args) throws FileNotFoundException, UnsupportedEncodingException {
 		ArrayList<String> inpline = new ArrayList<String>();
-		HashMap<String, Integer> keyfreq = new HashMap<String, Integer>();
 		HashMap<String, Node> keyNode = new HashMap<String, Node>();
 		Node n, remMax, reNode;
 		InitializeFibHeap ifh = new InitializeFibHeap();
@@ -36,7 +35,7 @@ public class KeywordCounter {
 				String[] splitline = str.split(" ");
 				String keyword = splitline[0].substring(1);
 				int keyval = Integer.parseInt(splitline[1]);
-				if(keyfreq.containsKey(keyword)){
+				if(keyNode.containsKey(keyword)){
 					n = keyNode.get(keyword);
 					ifh.increaseKey(n, keyval);
 				}
