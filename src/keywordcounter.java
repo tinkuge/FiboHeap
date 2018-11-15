@@ -1,14 +1,12 @@
-import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Scanner;
 
-public class KeywordCounter {
+public class keywordcounter {
 
 	public static void main(String[] args) throws FileNotFoundException, UnsupportedEncodingException {
 		ArrayList<String> inpline = new ArrayList<String>();
@@ -17,8 +15,7 @@ public class KeywordCounter {
 		InitializeFibHeap ifh = new InitializeFibHeap();
 		ArrayList<Node> nMaxList = new ArrayList<Node>();
 		
-		String inFile = "keywords.txt";
-		String fileLine = null;
+		String inFile = args[0];
 		Scanner sc = new Scanner(new File(inFile));
 		
 		while(sc.hasNextLine()){
