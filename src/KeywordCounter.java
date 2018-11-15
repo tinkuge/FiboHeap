@@ -98,7 +98,7 @@ public class KeywordCounter {
 			}
 		}
 		
-		
+		sc.close();
 	}
 
 }
