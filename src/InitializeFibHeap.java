@@ -135,6 +135,7 @@ class InitializeFibHeap {
 				intoHM(n);
 		}
 		rootList.clear();
+		degreeMap.clear();
 		return max;
 	}
 	

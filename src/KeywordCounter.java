@@ -53,7 +53,7 @@ public class KeywordCounter {
 				//Perform remove max n times
 				if(Character.isDigit(str.charAt(0))){
 					int num = Integer.parseInt(str);
-					
+					System.out.println(num);
 					n = ifh.peekMax();
 					
 					for(int i = 0; i < num; i++){
@@ -64,19 +64,24 @@ public class KeywordCounter {
 					
 					if(nMaxList.size() >= 1){
 						String word = nMaxList.get(0).key;
+						System.out.println(word);
 						pw.write(word);
 					}
 					
 					for(int j = 1; j < nMaxList.size(); j++){
 						String word = nMaxList.get(j).key;
+						System.out.println(word);
 						pw.write(","+ word);
 					}
 					
+					pw.write("\n");
+					
 					for(int k = 0; k < nMaxList.size(); k++){
 						reNode = nMaxList.get(k);
-						ifh.insert(reNode.key, reNode.val);
+						Node updated = ifh.insert(reNode.key, reNode.val);
 						
 						//should you insert it into hashmap
+						keyNode.put(updated.key, updated);
 					}
 					
 					nMaxList.clear();
