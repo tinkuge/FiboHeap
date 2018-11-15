@@ -40,7 +40,7 @@ class InitializeFibHeap {
 	}
 	
 	
-	//assumes each heap sent has its max node set to correct node
+	//Inserts a node into an existing tree by patching the node into existing doubly linked list
 	Node meld(Node m, Node n){
 		
 		Node temp;
@@ -122,7 +122,6 @@ class InitializeFibHeap {
 		//max = heap;
 		rootList.add(heap);
 		Node ini = heap.next;
-		Node current, newTree;
 		while(ini != heap){
 			rootList.add(ini);
 			ini = ini.next;
@@ -132,7 +131,7 @@ class InitializeFibHeap {
 			
 			//only consolidate if the node has no parents
 			if(n.parent == null)
-				intoHM(n);
+				pairwiseCombine(n);
 		}
 		rootList.clear();
 		degreeMap.clear();
@@ -141,7 +140,7 @@ class InitializeFibHeap {
 	
 	//How will you keep track of the heap?
 	
-	void intoHM(Node insNode){
+	void pairwiseCombine(Node insNode){
 		Node current = degreeMap.get(insNode.degree);
 		
 		/*
@@ -181,7 +180,7 @@ class InitializeFibHeap {
 				current.child.parent = current;
 				current.degree = current.degree+1;
 				insNode.childCut = false;
-				intoHM(current);
+				pairwiseCombine(current);
 			}
 			
 			else{
@@ -200,7 +199,7 @@ class InitializeFibHeap {
 				insNode.child.parent = insNode;
 				insNode.degree = insNode.degree + 1;
 				current.childCut = false;
-				intoHM(insNode);
+				pairwiseCombine(insNode);
 			}
 		}
 
@@ -210,6 +209,7 @@ class InitializeFibHeap {
 	void increaseKey(Node n, int inc){
 		n.val = n.val + inc;
 		
+		//if the node has parents and the node value is greater than its parents
 		if((n.parent != null) && (n.val > n.parent.val))
 			childCut(n);
 			
@@ -220,10 +220,18 @@ class InitializeFibHeap {
 	void childCut(Node n){
 		n.childCut = false;
 		Node parent = n.parent;
+		
+		if(parent == null)
+			return;
+		
 		parent.degree = parent.degree - 1;
+		
+		
+		
 		//patch n's siblings
 		n.prev.next = n.next;
 		n.next.prev = n.prev;
+		
 		
 		if(parent.child == n){
 			if(n.next != n){

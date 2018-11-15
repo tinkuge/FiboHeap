@@ -50,7 +50,6 @@ public class keywordcounter {
 				//Perform remove max n times
 				if(Character.isDigit(str.charAt(0))){
 					int num = Integer.parseInt(str);
-					System.out.println(num);
 					n = ifh.peekMax();
 					
 					for(int i = 0; i < num; i++){
@@ -61,13 +60,11 @@ public class keywordcounter {
 					
 					if(nMaxList.size() >= 1){
 						String word = nMaxList.get(0).key;
-						System.out.println(word);
 						pw.write(word);
 					}
 					
 					for(int j = 1; j < nMaxList.size(); j++){
 						String word = nMaxList.get(j).key;
-						System.out.println(word);
 						pw.write(","+ word);
 					}
 					
