@@ -96,6 +96,8 @@ class InitializeFibHeap {
 		altmax = max;
 		//set max to something else which won't necessarily be the max of that tree
 		max = max.next;
+		
+		if(altmax == max) max = null;
 		//sever connections between siblings by making the next and prev point to itself
 		altmax.prev = altmax;
 		altmax.next = altmax;
@@ -103,7 +105,7 @@ class InitializeFibHeap {
 		
 		//if prev max has children
 		
-		if(altmax.degree > 0){	//track degree carefully
+		if(altmax.child != null){	//track degree carefully
 			Node maxchild = altmax.child;
 			//sever connections between parent and children
 			maxchild.parent = null;
@@ -120,7 +122,7 @@ class InitializeFibHeap {
 			//max pointer won't be pointing to true max
 			newHeap = meld(max, maxchild);
 			//find new max and assign it to max variable
-			//max = findMax(newHeap);
+			max = newHeap;
 			consolidate(newHeap);
 			size = size -1;
 			//return the removed max node
@@ -292,8 +294,8 @@ class InitializeFibHeap {
 				parent.child = null;
 		}
 		
-		n.prev = null;
-		n.next = null;
+		n.prev = n;
+		n.next = n;
 		n.parent = null;
 		//meld the node with top level nodes
 		max = meld(max, n);
